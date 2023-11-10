@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: youtube_backend
+    build:
+      context: .
+      dockerfile: ./Docker/Dockerfile.backend
+    command: sh -c "python ./backend/manage.py makemigrations &&
+                    python ./backend/manage.py migrate &&
+                    gunicorn --workers=5 --threads=8 --timeout 1000 backend.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
