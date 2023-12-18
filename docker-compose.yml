@@ -22,6 +22,11 @@ services:
       - ./frontend/:/frontend
     ports:
       - "3000:3000"
+  db_postgres:
+    container_name: youtube_postgres_db
+    image: postgres
+    env_file:
+      - ./backend/.env
 
 volumes:
   backend:
