@@ -14,7 +14,6 @@ help:
 	@echo "  make logs           - View container logs"
 	@echo "  make migrations     - Apply database migrations"
 	@echo "  make superuser      - Create a superuser"
-	@echo "  make lint           - Run linting checks"
 	@echo "  make test           - Run tests"
 	@echo "  make clean          - Remove all Docker containers and volumes"
 	@echo "  make docker_it      - Run docker in interactive mode"
@@ -29,17 +28,14 @@ logs:
 	$(DOCKER_COMPOSE) logs -f $(DJANGO_CONTAINER)
 
 migrations:
-	$(DOCKER_COMPOSE) exec $(DJANGO_CONTAINER) python manage.py makemigrations
-	$(DOCKER_COMPOSE) exec $(DJANGO_CONTAINER) python manage.py migrate
+	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py makemigrations
+	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py migrate
 
 superuser:
-	$(DOCKER_COMPOSE) exec $(DJANGO_CONTAINER) python manage.py createsuperuser
-
-lint:
-	$(DOCKER_COMPOSE) exec $(DJANGO_CONTAINER) flake8 .
+	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py createsuperuser
 
 test:
-	$(DOCKER_COMPOSE) exec $(DJANGO_CONTAINER) python manage.py test
+	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py test
 
 clean:
 	$(DOCKER_COMPOSE) down -v
