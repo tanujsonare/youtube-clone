@@ -32,7 +32,7 @@ migrations:
 	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py migrate
 
 superuser:
-	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py createsuperuser
+	$(DOCKER) exec -it $(DJANGO_CONTAINER) python manage.py createsuperuser
 
 test:
 	$(DOCKER) exec $(DJANGO_CONTAINER) python manage.py test
