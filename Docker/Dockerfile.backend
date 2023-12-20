@@ -4,6 +4,11 @@ WORKDIR /backend
 
 COPY ../backend/requirements.txt /backend/requirements.txt
 
+RUN apk add --no-cache postgresql-libs \
+    && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev \
+    && pip install psycopg2-binary==2.9.6 \
+    && apk --purge del .build-deps
+
 RUN pip3 install --upgrade pip
 
 RUN pip install -r requirements.txt

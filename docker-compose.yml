@@ -23,10 +23,18 @@ services:
     ports:
       - "3000:3000"
   db_postgres:
-    container_name: youtube_postgres_db
+    container_name: postgres_db
     image: postgres
-    env_file:
-      - ./backend/.env
+    environment:
+        POSTGRES_DB: youtube_db
+        POSTGRES_USER: youtubeuser
+        POSTGRES_PASSWORD: password
+        PGDATA: /data/backend
+    volumes:
+        - backend:/data/backend
+    ports:
+        - 5432:5432
+    restart: always
 
 volumes:
   backend:
